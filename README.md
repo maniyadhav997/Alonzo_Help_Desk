@@ -1,115 +1,172 @@
-🧠 Alonzo Help Desk
-A lightweight, internal Q&A system built using FastAPI and JSON-based storage. It allows users to manage questions, answers, and tags—and also save favorite questions and answers.
+```markdown
+# 🧠 Alonzo Help Desk - FastAPI Q&A System
 
-🚀 Features
-✅ Add, view, update, and delete questions
+This is a simple internal FAQ and Q&A system built with **FastAPI**, using **JSON files for storage**. It supports managing questions, answers, tags, and user favorite lists.
 
-✅ Add, edit, delete, upvote, and accept answers
+---
 
-✅ Filter and sort questions by tag, view count, or answer count
+## 🚀 Features
 
-✅ View all available tags
+- Add, update, delete questions
+- Add, update, delete answers
+- Upvote and accept answers
+- Filter and sort questions by tags, views, answer count, etc.
+- Manage tags dynamically from questions
+- Add/retrieve favorite questions and answers per user
 
-✅ Users can maintain a personal list of favorite questions and answers
+---
 
-📁 Project Structure
-pgsql
-Copy
-Edit
-alonzo-help-desk/
+## 📁 Project Structure
+
+```
+.
 ├── main.py
-├── models/
-│   ├── question_model.py
-│   ├── answer_model.py
-│   └── user_model.py
 ├── routers/
 │   ├── question.py
 │   ├── answer.py
 │   └── tags.py
-│   └── user.py
+├── models/
+│   ├── question_model.py
+│   ├── answer_model.py
+│   └── user_model.py
 ├── utils/
 │   └── file_handler.py
-└── data/
-    ├── questions.json
-    ├── answers.json
-    └── users.json
-🔧 Installation & Run
-1. Clone the repo
-bash
-Copy
-Edit
-git clone https://github.com/your-username/alonzo-help-desk.git
-cd alonzo-help-desk
-2. Create a virtual environment
-bash
-Copy
-Edit
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-3. Install dependencies
-bash
-Copy
-Edit
+├── data/
+│   ├── questions.json
+│   ├── answers.json
+│   └── users.json
+```
+
+---
+
+## 🛠️ Setup Instructions
+
+1. **Install dependencies**  
+```bash
 pip install fastapi uvicorn
-4. Run the app
-bash
-Copy
-Edit
+```
+
+2. **Run the server**  
+```bash
 uvicorn main:app --reload
-Open in browser: http://127.0.0.1:8000/docs for Swagger UI.
+```
 
-📬 API Endpoints Summary
-📌 Questions
-GET /questions: List all questions (filterable)
+3. **API Docs**  
+Visit: `http://localhost:8000/docs`
 
-POST /questions: Create a new question
+---
 
-GET /questions/{id}: View question with answers
+## 🧪 Sample Endpoints & Usage
 
-PUT /questions/{id}: Edit a question
+### 🔹 Questions
 
-DELETE /questions/{id}: Delete a question
+- **Create a question**
+```bash
+POST /questions
+```
 
-PATCH /questions/{id}/increment-view: Increase view count
+```json
+{
+  "title": "What is FastAPI?",
+  "content": "Can someone explain how FastAPI works?",
+  "tags": ["python", "api"],
+  "created_by": "admin@example.com",
+  "created_at": "2025-04-05T10:00:00",
+  "is_answered": false,
+  "views": 0,
+  "answer_ids": []
+}
+```
 
-💬 Answers
-POST /answers/{question_id}/answers: Add answer to question
+- **List questions**
+```bash
+GET /questions?tag=python&sort=views
+```
 
-PUT /answers/{id}: Edit answer
+- **Get a specific question**
+```bash
+GET /questions/{id}
+```
 
-DELETE /answers/{id}: Delete answer
+---
 
-PATCH /answers/{id}/upvote: Upvote answer
+### 🔹 Answers
 
-PATCH /answers/{id}/accept: Mark answer as accepted
+- **Add answer**
+```bash
+POST /answers/{question_id}/answers
+```
 
-🏷️ Tags
-GET /tags: List all tags with counts
+```json
+{
+  "id": "string",
+  "quiestion_id": "string",
+  "content": "FastAPI is a modern web framework.",
+  "created_by": "user@example.com",
+  "is_answerd": false
+}
+```
 
-GET /tags/{tag}/questions: List questions by tag
+- **Upvote answer**
+```bash
+PATCH /answers/{id}/upvote
+```
 
-👤 User Favorites
-POST /users/{email}/favorites: Add/update favorites
+- **Accept answer**
+```bash
+PATCH /answers/{id}/accept
+```
 
-GET /users/{email}/favorites: Get favorite questions/answers
+---
 
-📂 Sample JSON Files
-All data is stored in the /data directory in .json files:
+### 🔹 Tags
 
-questions.json
+- **List tags with counts**
+```bash
+GET /tags
+```
 
-answers.json
+- **Get questions by tag**
+```bash
+GET /tags/{tag}/questions
+```
 
-users.json
+---
 
-Each file is automatically updated by API actions.
+### 🔹 Users - Favorite List
 
-📌 Dependencies
-Python 3.7+
+- **Add/Update user favorites**
+```bash
+POST /users/favorites
+```
 
-FastAPI
+```json
+{
+  "email": "user@example.com",
+  "favorite_questions": ["<question_id_1>", "<question_id_2>"],
+  "favorite_answers": ["<answer_id_1>"]
+}
+```
 
-Uvicorn
+- **Get user favorites**
+```bash
+GET /users/favorites/{email}
+```
 
-📞 Contact
-Made by [Your Name] — feel free to connect for feedback or ideas!
+---
+
+## 📦 Data Format
+
+### Example `users.json`
+
+```json
+[
+  {
+    "email": "user@example.com",
+    "favorite_questions": ["<uuid>", "<uuid>"],
+    "favorite_answers": ["<uuid>"]
+  }
+]
+```
+
+---
