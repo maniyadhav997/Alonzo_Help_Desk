@@ -1,132 +1,135 @@
-# 🧠 Alonzo Help Desk - FastAPI Q&A System
+# Alonzo Help Desk API
 
-This is a simple internal FAQ and Q&A system built with **FastAPI**, using **JSON files for storage**. It supports managing questions, answers, tags, and user favorite lists.
-
----
-
-## 🚀 Features
-
-- Add, update, delete questions
-- Add, update, delete answers
-- Upvote and accept answers
-- Filter and sort questions by tags, views, answer count, etc.
-- Manage tags dynamically from questions
-- Add/retrieve favorite questions and answers per user
+A simple internal Q&A system built using **FastAPI** and **JSON-based storage**. Users can post questions, submit answers, upvote and accept answers, and manage favorite lists.
 
 ---
 
-## 📁 Project Structure
+## Folder Structure
+
+```
 alonzo-helpdesk-api/
-│
 ├── app/
-│   ├── main.py                      # FastAPI app entry point
-│   │
-│   ├── routers/                     # Route handlers
+│   ├── main.py                  # App entry
+│   ├── routers/                 # All route handlers
 │   │   ├── answer.py
 │   │   ├── question.py
 │   │   ├── tags.py
 │   │   └── user.py
-│   │
-│   ├── models/                      # Pydantic models
+│   ├── models/                  # Pydantic models
 │   │   ├── answer_model.py
 │   │   ├── question_model.py
 │   │   └── user_model.py
-│   │
-│   ├── utils/                       # Reusable utilities
-│   │   └── file_handler.py
-│
-├── data/                            # JSON storage files
+│   └── utils/                   # File handler
+│       └── file_handler.py
+├── data/                        # JSON files as database
 │   ├── questions.json
 │   ├── answers.json
 │   └── users.json
-│
 ├── README.md
 ├── requirements.txt
+```
 
 ---
 
-## 📦 Setup Instructions
+## Features
 
-1. **Clone the Repository**
+- Create, update, delete questions & answers
+- Search, sort & filter questions
+- Upvote & accept answers
+- List tags & get questions by tag
+- ⭐ Favorite questions & answers per user (by email)
+
+---
+
+## Setup Instructions
+
+1. **Clone the Repo**
    ```bash
    git clone https://github.com/maniyadhav997/Alonzo_Help_Desk.git
    cd Alonzo_Help_Desk
-Install Dependencies
+   ```
 
-bash
-Copy
-Edit
-pip install fastapi uvicorn
-Run the API
+2. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-bash
-Copy
-Edit
-uvicorn main:app --reload
-Open in Browser
+3. **Run the App**
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-Swagger UI: http://localhost:8000/docs
+4. **Open Docs**
+   - Swagger: http://localhost:8000/docs
+   - ReDoc: http://localhost:8000/redoc
 
-ReDoc: http://localhost:8000/redoc
+---
 
-📘 API Endpoints
-🔹 Questions
-GET /questions - List questions (filters: tag, is_answered, search, sort)
+## API Summary
 
-GET /questions/{id} - Get a specific question with answers
+### Questions
+| Method | Endpoint | Description |
+|--------|-------------------------------|-------------|
+| GET    | `/questions`                 | List/filter/sort questions |
+| GET    | `/questions/{id}`            | Retrieve specific question with answers |
+| POST   | `/questions`                 | Create a new question |
+| PUT    | `/questions/{id}`            | Edit question title/content/tags |
+| DELETE | `/questions/{id}`            | Delete a question |
+| PATCH  | `/questions/{id}/increment-view` | Increase view count |
 
-POST /questions - Create a question
+### Answers
+| Method | Endpoint | Description |
+|--------|----------------------------------|-------------|
+| POST   | `/answers/{question_id}/answers`| Post an answer |
+| PUT    | `/answers/{id}`                 | Edit an answer |
+| DELETE | `/answers/{id}`                 | Delete an answer |
+| PATCH  | `/answers/{id}/upvote`          | Upvote an answer |
+| PATCH  | `/answers/{id}/accept`          | Mark as accepted |
 
-PUT /questions/{id} - Update question title/content/tags
+### Tags
+| Method | Endpoint | Description |
+|--------|----------------------------------|-------------|
+| GET    | `/tags`                         | List all tags with frequency |
+| GET    | `/tags/{tag}/questions`         | Questions with a specific tag |
 
-DELETE /questions/{id} - Delete a question
+### Favorites (User)
+| Method | Endpoint | Description |
+|--------|--------------------------------------|-------------|
+| POST   | `/users/favorites`                  | Add favorite questions/answers |
+| GET    | `/users/{email}/favorites`          | Retrieve user's favorite lists |
 
-PATCH /questions/{id}/increment-view - Increment question views
+---
 
-🔹 Answers
-POST /answers/{question_id}/answers - Add an answer to a question
+## Sample users.json
 
-PUT /answers/{id} - Edit answer content
-
-DELETE /answers/{id} - Delete an answer
-
-PATCH /answers/{id}/upvote - Upvote an answer
-
-PATCH /answers/{id}/accept - Accept an answer
-
-🔹 Tags
-GET /tags - List all tags with count
-
-GET /tags/{tag}/questions - List questions with a given tag
-
-🔹 User Favorites
-POST /users/favorites - Add favorite question/answer for user (by email)
-
-GET /users/{email}/favorites - Get a user’s favorite question & answer IDs
-
-📄 Sample users.json
-json
-Copy
-Edit
+```json
 [
   {
-    "email": "user@example.com",
-    "favorite_questions": ["question-uuid"],
-    "favorite_answers": ["answer-uuid"]
+    "email": "alice@example.com",
+    "favorite_questions": ["uuid-question-1", "uuid-question-2"],
+    "favorite_answers": ["uuid-answer-1"]
   }
 ]
-🛠 Technologies Used
-FastAPI for building the RESTful API
+```
 
-Pydantic for data validation
+---
 
-UUID for unique object identification
+## Requirements
 
-JSON file-based persistence
+- Python 3.9+
+- FastAPI
+- Uvicorn
 
-🙌 Contribution
-Feel free to fork this repo and open a pull request for improvements or feature suggestions!
+```
+# requirements.txt
+fastapi
+uvicorn
+```
 
-📫 Contact
-For questions or issues, feel free to reach out at yadavmani8543@gmail.com.
+---
+
+## Author
+
+Manikanta
+yadavmani8543@gmail.com
 
