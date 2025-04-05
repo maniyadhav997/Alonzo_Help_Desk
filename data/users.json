@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "email": "alice@example.com",
+    "favorite_questions": [
+      "aa060d87-edb2-4351-9887-bac5b7c64028"
+    ],
+    "favorite_answers": []
+  }
+]
