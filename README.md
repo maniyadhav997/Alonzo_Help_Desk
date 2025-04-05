@@ -49,8 +49,8 @@ alonzo-helpdesk-api/
 
 1. **Clone the Repository**
    ```bash
-   git clone <your-repo-url>
-   cd alonzo-helpdesk-api
+   git clone https://github.com/maniyadhav997/Alonzo_Help_Desk.git
+   cd Alonzo_Help_Desk
 Install Dependencies
 
 bash
