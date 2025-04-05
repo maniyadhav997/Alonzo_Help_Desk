@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "09cb301b-7e7f-4ef2-99e4-ded874a69801",
+    "question_id": "7f8befb0-531e-411a-927f-5972869f3887",
+    "content": "FastAPI is a modern, fast Python web framework for APIs.",
+    "created_by": "bob@example.com",
+    "created_at": "2025-04-05T13:23:35.804698",
+    "upvotes": 0,
+    "is_accepted": false
+  }
+]
